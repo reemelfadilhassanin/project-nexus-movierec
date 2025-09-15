@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+*.db
+
+# Env
+.env
+.env.local
+.env.*.local
+
+*.log
+media/
+staticfiles/
+db.sqlite3
+
+.vscode/
+.idea/
+
+
+.DS_Store
+
+# Docker
+docker-compose.override.yml
+
+.python-version
