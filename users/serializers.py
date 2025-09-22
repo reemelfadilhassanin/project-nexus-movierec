@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from .models import FavoriteMovie
+from .models import FavoriteMovie,  Movie
 class UserRegistrationSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
 
@@ -16,6 +16,9 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         )
         return user
 class FavoriteMovieSerializer(serializers.ModelSerializer):
+    movie_title = serializers.ReadOnlyField(source="movie.title")
+    movie = serializers.PrimaryKeyRelatedField(queryset=Movie.objects.all())
+
     class Meta:
         model = FavoriteMovie
-        fields = ["id", "movie_id", "title", "poster_path", "created_at"]
+        fields = ["id", "movie", "movie_title", "created_at"]

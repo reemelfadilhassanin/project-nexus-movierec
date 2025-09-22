@@ -68,3 +68,9 @@ class FavoriteMovieDetailView(generics.RetrieveUpdateDestroyAPIView):
 
     def get_queryset(self):
         return FavoriteMovie.objects.filter(user=self.request.user)
+class FavoriteMovieCreateView(generics.CreateAPIView):
+    serializer_class = FavoriteMovieSerializer
+    permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
