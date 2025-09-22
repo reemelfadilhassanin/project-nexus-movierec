@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "movies",
     'rest_framework',
     'rest_framework_simplejwt',
+    'users',
 ]
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (

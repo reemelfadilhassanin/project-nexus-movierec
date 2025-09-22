@@ -16,10 +16,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.http import JsonResponse
 def home(request):
     return JsonResponse({"message": "Welcome to MovieRec API"})
 urlpatterns = [
      path("", home),
     path('admin/', admin.site.urls),
-     path('api/auth/', include('movies.urls')),
+    path('api/users/', include('users.urls')),
+      path('api/movies/', include('movies.urls')),
+
 ]
