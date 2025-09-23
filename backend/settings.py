@@ -138,9 +138,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://redis:6379/1",  # إذا Redis في Docker
+        "LOCATION": "redis://redis:6379/0", 
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
     }
+}
+
+
+TMDB_CACHE_TTL = {
+    "trending": 60 * 60,          # 1 hour
+    "recommendations": 30 * 60,   # 30 minutes
 }
