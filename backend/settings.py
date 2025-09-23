@@ -141,6 +141,7 @@ CACHES = {
         "LOCATION": "redis://redis:6379/0", 
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            "KEY_PREFIX": "movies",
         }
     }
 }
@@ -149,4 +150,18 @@ CACHES = {
 TMDB_CACHE_TTL = {
     "trending": 60 * 60,          # 1 hour
     "recommendations": 30 * 60,   # 30 minutes
+}
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+        },
+    },
+    "root": {
+        "handlers": ["console"],
+        "level": "INFO",
+    },
 }
