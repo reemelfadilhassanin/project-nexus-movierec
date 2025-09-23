@@ -1,41 +1,42 @@
+
 # Movie Recommendation Backend — Project Nexus (ProDev BE)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)]()
-[![CI](https://img.shields.io/badge/ci-GitHub%20Actions-lightgrey.svg)]()
+[![CI](https://img.shields.io/badge/CI-GitHub%20Actions-lightgrey.svg)]()
 
 ## Overview
 
-A backend API for a Movie Recommendation application built for **Project Nexus (ProDev Backend)**.
-Features: trending & recommended movies (TMDb), JWT authentication, user favorites, Redis caching, Swagger documentation.
+A backend API for a **Movie Recommendation** application, built as part of **Project Nexus (ProDev Backend)**.
+It provides endpoints for trending movies, personalized recommendations, JWT-based authentication, user favorites, Redis caching, and auto-generated API docs.
+
+---
 
 ## Demo & Deliverables
 
-- ERD diagram: (link to Lucidchart / draw.io)
-- Demo video (≤ 5 min): (link to recorded demo)
-- Slides: (Google Slides link)
-- Hosted API: (link if deployed)
+- **ERD diagram:** ()
+- **Demo video (≤ 5 min):** (🔗 )
+- **Slides:** (🔗 )
+- **Hosted API (if deployed):** (🔗)
 
-> Make sure the links above are accessible to reviewers/mentors.
+---
 
-## Tech stack
+## Tech Stack
 
 - **Language:** Python 3.11+
 - **Framework:** Django 4.x, Django REST Framework
 - **Auth:** djangorestframework-simplejwt (JWT)
-- **DB:** PostgreSQL
+- **Database:** PostgreSQL
 - **Cache:** Redis
-- **External API:** TMDb (The Movie Database)
-- **Docs:** Swagger (drf-yasg) or drf-spectacular
-- **Containerization / Dev:** Docker, docker-compose
-- **CI:** GitHub Actions
+- **External API:** [TMDb](https://www.themoviedb.org/) (The Movie Database)
+- **Docs:** Swagger UI (drf-yasg) / drf-spectacular
+- **Containerization / Dev:** Docker & docker-compose
+- **CI/CD:** GitHub Actions
+
+---
 
 ## Quickstart (Docker)
 
-1. Copy `.env.example` → `.env` and fill values (especially `TMDB_API_KEY`).
-2. Build & run:
-
-```bash
-docker-compose up --build -d
-docker compose exec web python manage.py migrate
-docker compose exec web python manage.py createsuperuser
-```
+1. Copy environment variables:
+   ```bash
+   cp .env.example .env
+   ```
