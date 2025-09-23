@@ -12,3 +12,4 @@ pytest-django>=4.8
 psycopg2-binary
 
 dj-database-url>=2.1.0
+drf-yasg
