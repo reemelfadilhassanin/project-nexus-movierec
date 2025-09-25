@@ -173,3 +173,8 @@ ALLOWED_HOSTS = [
     "localhost",
     "project-nexus-movierec.onrender.com",
 ]
+SWAGGER_SETTINGS = {
+    'USE_SESSION_AUTH': False,   
+    'SECURITY_DEFINITIONS': {},
+}
+
