@@ -13,10 +13,10 @@ It provides endpoints for trending movies, personalized recommendations, JWT-bas
 
 ## Demo & Deliverables
 
-- **ERD diagram:** ()
+- **ERD diagram:** (https://docs.google.com/document/d/1q2J4SjqpYVBpviynqyq8mig6yeLPAW1PR0Vezlb6VUo/edit?usp=sharing)
 - **Demo video (≤ 5 min):** (🔗 )
 - **Slides:** (🔗 )
-- **Hosted API (if deployed):** (🔗)
+- **Hosted API :** (🔗https://project-nexus-movierec.onrender.com/api/docs/)
 
 ---
 
