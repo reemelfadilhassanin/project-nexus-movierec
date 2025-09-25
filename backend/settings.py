@@ -168,3 +168,8 @@ LOGGING = {
         "level": "INFO",
     },
 }
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+    "localhost",
+    "project-nexus-movierec.onrender.com",
+]
