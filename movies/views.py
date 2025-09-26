@@ -11,7 +11,11 @@ from rest_framework import status
 logger = logging.getLogger(__name__)
 
 TMDB_API_KEY = settings.TMDB_API_KEY
-CACHE_TTL = getattr(settings, "TMDB_CACHE_TTL", {"trending": 3600, "recommendations": 1800})
+CACHE_TTL = getattr(
+    settings,
+    "TMDB_CACHE_TTL",
+    {"trending": 3600, "recommendations": 1800, "search": 1800},  # Added search TTL
+)
 
 
 def _fetch_tmdb(url):
@@ -34,7 +38,6 @@ class TrendingMoviesView(APIView):
             url = f"https://api.themoviedb.org/3/trending/movie/week?api_key={TMDB_API_KEY}"
             raw = _fetch_tmdb(url)
             results = raw.get("results", [])
-            # Validation قبل التخزين
             data = [
                 {
                     "id": m.get("id"),
@@ -55,7 +58,10 @@ class TrendingMoviesView(APIView):
                 logger.warning(f"Cache STALE for {cache_key} due to {e}")
                 return Response(stale, headers={"X-Cache": "STALE", "Warning": str(e)})
             logger.error(f"Failed to fetch trending movies: {e}")
-            return Response({"detail": "Failed to fetch trending movies"}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
+            return Response(
+                {"detail": "Failed to fetch trending movies"},
+                status=status.HTTP_503_SERVICE_UNAVAILABLE
+            )
 
 
 class MovieRecommendationsView(APIView):
@@ -92,4 +98,46 @@ class MovieRecommendationsView(APIView):
                 logger.warning(f"Cache STALE for {cache_key} due to {e}")
                 return Response(stale, headers={"X-Cache": "STALE", "Warning": str(e)})
             logger.error(f"Failed to fetch recommendations for movie {movie_id}: {e}")
-            return Response({"detail": "Failed to fetch recommendations"}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
+            return Response(
+                {"detail": "Failed to fetch recommendations"},
+                status=status.HTTP_503_SERVICE_UNAVAILABLE
+            )
+
+
+class MovieSearchView(APIView):
+    permission_classes = []  # Add IsAuthenticated if needed
+
+    def get(self, request, *args, **kwargs):
+        query = request.query_params.get("q")
+        if not query:
+            return Response(
+                {"error": "Query parameter 'q' is required."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        cache_key = f":movies:search:{query.lower()}"
+        data = cache.get(cache_key)
+        if data is not None:
+            logger.info(f"Cache HIT for {cache_key}")
+            return Response(data, headers={"X-Cache": "HIT"})
+
+        url = f"https://api.themoviedb.org/3/search/movie?api_key={TMDB_API_KEY}&query={query}"
+
+        try:
+            response = requests.get(url, timeout=5)
+            response.raise_for_status()
+            data = response.json().get("results", [])
+            if data:
+                cache.set(cache_key, data, timeout=CACHE_TTL.get("search", 1800))
+                logger.info(f"Cache MISS: stored {len(data)} items under {cache_key}")
+            return Response(data, headers={"X-Cache": "MISS"})
+        except requests.RequestException as e:
+            stale = cache.get(cache_key)
+            if stale:
+                logger.warning(f"Cache STALE for {cache_key} due to {e}")
+                return Response(stale, headers={"X-Cache": "STALE", "Warning": str(e)})
+            logger.error(f"Failed to fetch search results for query '{query}': {e}")
+            return Response(
+                {"error": "Failed to fetch movies from TMDb"},
+                status=status.HTTP_503_SERVICE_UNAVAILABLE
+            )
