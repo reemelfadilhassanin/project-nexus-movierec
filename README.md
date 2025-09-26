@@ -1,3 +1,4 @@
+Start services (web + db + redis)
 
 # Movie Recommendation Backend — Project Nexus (ProDev BE)
 
@@ -14,8 +15,8 @@ It provides endpoints for trending movies, personalized recommendations, JWT-bas
 ## Demo & Deliverables
 
 - **ERD diagram:** (https://docs.google.com/document/d/1q2J4SjqpYVBpviynqyq8mig6yeLPAW1PR0Vezlb6VUo/edit?usp=sharing)
-- **Demo video (≤ 5 min):** (🔗 )
-- **Slides:** (🔗 )
+- **Demo video (≤ 5 min):** (🔗https://drive.google.com/file/d/1gKlgm6EBAj7t0CbRhmZ_ad3mEaAdg75P/view?usp=sharing )
+- **Slides:** (🔗https://docs.google.com/presentation/d/1r6rzA0R5u5-uqeSYhWDfaF0QkRSY_ehBFuh81wSv43I/edit?usp=sharing )
 - **Hosted API :** (🔗https://project-nexus-movierec.onrender.com/api/docs/)
 
 ---
@@ -36,7 +37,27 @@ It provides endpoints for trending movies, personalized recommendations, JWT-bas
 
 ## Quickstart (Docker)
 
-1. Copy environment variables:
+1. Start services (web + db + redis):
+
    ```bash
-   cp .env.example .env
+
+   docker-compose up -d
+
+   ```
+   2. Run Django server:
+
+   ```bash
+
+
+   docker-compose exec web python manage.py runserver 0.0.0.0:8000
+
+   ```
+   3.Redis & Caching Demo:
+
+   ```bash
+
+   docker exec -it project-nexus-movierec-redis-1 redis-cli
+   keys *
+
+
    ```
